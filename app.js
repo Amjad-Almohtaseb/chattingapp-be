@@ -5,6 +5,7 @@ const cors = require("cors");
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
 
 //routes
+const roomsRoutes = require("./routes/roomsRoutes");
 const usersRoutes = require("./routes/usersRoutes");
 //middleware
 app.use(cors());
@@ -18,6 +19,7 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 app.use(usersRoutes);
+app.use(roomsRoutes);
 //error middleware
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
@@ -30,5 +32,5 @@ app.use((req, res, next) => {
 });
 
 app.listen(8080, () => {
-  console.log("The application is running on localhost:8000");
+  console.log("The application is running on localhost:8080");
 });

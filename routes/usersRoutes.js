@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 //controllers
-const { signup, signin } = require("../controllers/userControllers");
+const { signup, signin, usersList } = require("../controllers/userControllers");
 
 router.post(
   "/signin",
@@ -11,5 +11,10 @@ router.post(
 );
 
 router.post("/signup", signup);
+router.get(
+  "/fetch",
+  passport.authenticate("jwt", { session: false }),
+  usersList
+);
 
 module.exports = router;

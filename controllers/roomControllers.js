@@ -13,11 +13,11 @@ exports.roomCreate = async (req, res, next) => {
     await Chat.bulkCreate(chat);
 
     const finalRoom = {
-      ...newRoom.toJSON,
       roomId: newRoom.id,
       adminId: req.user.id,
       usersId: req.body.users,
       name: req.body.name,
+      image: newRoom.image,
     };
 
     res.status(201).json(finalRoom);

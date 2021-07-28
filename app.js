@@ -20,6 +20,7 @@ passport.use(jwtStrategy);
 
 app.use(usersRoutes);
 app.use(roomsRoutes);
+
 //error middleware
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({

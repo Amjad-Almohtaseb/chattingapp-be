@@ -15,8 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     Message.belongsTo(models.User, {
       foreignKey: "senderId",
     });
-  };
-  Message.associate = (models) => {
+
     models.Room.hasMany(Message, {
       foreignKey: "roomId",
       allowNull: false,

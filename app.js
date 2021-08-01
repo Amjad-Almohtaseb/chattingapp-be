@@ -1,6 +1,6 @@
 const express = require("express");
 const { Message } = require("./db/models");
-
+const path = require("path");
 const app = express();
 const passport = require("passport");
 const cors = require("cors");
@@ -16,6 +16,7 @@ const roomsRoutes = require("./routes/roomsRoutes");
 const usersRoutes = require("./routes/usersRoutes");
 
 const messagesRoutes = require("./routes/messagesRoutes");
+const userProfileRoutes = require("./routes/userProfileRoutes");
 
 //middleware
 app.use(cors());
@@ -31,6 +32,10 @@ passport.use(jwtStrategy);
 app.use(usersRoutes);
 app.use(roomsRoutes);
 app.use(messagesRoutes);
+app.use(userProfileRoutes);
+
+//handling image
+app.use("/media", express.static(path.join(__dirname, "media")));
 
 io.on("connection", (socket) => {
   console.log(socket.id);
@@ -40,6 +45,7 @@ io.on("connection", (socket) => {
     socket.emit("message", { message });
   });
 });
+
 //error middleware
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({

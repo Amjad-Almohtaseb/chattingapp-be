@@ -17,6 +17,7 @@ const usersRoutes = require("./routes/usersRoutes");
 
 const messagesRoutes = require("./routes/messagesRoutes");
 const userProfileRoutes = require("./routes/userProfileRoutes");
+const db = require("./db/models");
 
 //middleware
 app.use(cors());
@@ -39,7 +40,7 @@ app.use("/media", express.static(path.join(__dirname, "media")));
 
 io.on("connection", (socket) => {
   console.log(socket.id);
-  socket.on("message", (message) => {
+  socket.on("message", async (message) => {
     Message.create(message);
 
     socket.emit("message", { message });

@@ -40,10 +40,10 @@ app.use("/media", express.static(path.join(__dirname, "media")));
 
 io.on("connection", (socket) => {
   console.log(socket.id);
-  socket.on("message", async (message) => {
+  socket.on("message", (message) => {
     Message.create(message);
 
-    socket.emit("message", { message });
+    io.sockets.emit("message", { message });
   });
 });
 

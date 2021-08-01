@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const UserProfile = sequelize.define("UserProfile", {
-    Image: { type: DataTypes.STRING },
+    image: { type: DataTypes.STRING },
 
     status: { type: DataTypes.STRING },
 

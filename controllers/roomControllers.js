@@ -6,6 +6,7 @@ exports.roomCreate = async (req, res, next) => {
       name: req.body.name,
     });
     req.body.users.push(req.user.id);
+
     const chat = req.body.users.map((id) => ({
       roomId: newRoom.id,
       userId: id,
@@ -19,7 +20,6 @@ exports.roomCreate = async (req, res, next) => {
       name: req.body.name,
       image: newRoom.image,
     };
-
     res.status(201).json(finalRoom);
   } catch (error) {
     next(error);
@@ -37,7 +37,9 @@ exports.roomsList = async (req, res, next) => {
         },
       ],
     });
-    console.log(rooms);
+
+    console.log(rooms); //Remove console log
+
     const newRooms = rooms.map((room) => {
       return {
         adminId: req.user.id,

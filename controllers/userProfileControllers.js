@@ -18,6 +18,7 @@ exports.userProfileUpdate = async (req, res, next) => {
     next(error);
   }
 };
+
 exports.profilesList = async (_, res, next) => {
   try {
     const userProfiles = await UserProfile.findAll();

@@ -6,20 +6,20 @@ const passport = require("passport");
 const cors = require("cors");
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
 
-//socket
+//Socket
 const server = require("http").createServer(app);
 const socketio = require("socket.io");
-
 const io = socketio(server, { cors: { origin: "*" } });
-//routes
+
+//Routes
 const roomsRoutes = require("./routes/roomsRoutes");
 const usersRoutes = require("./routes/usersRoutes");
-
 const messagesRoutes = require("./routes/messagesRoutes");
 const userProfileRoutes = require("./routes/userProfileRoutes");
-const db = require("./db/models");
 
-//middleware
+const db = require("./db/models"); //Remove unused import
+
+//Middleware
 app.use(cors());
 
 app.use(express.json());
@@ -35,19 +35,18 @@ app.use(roomsRoutes);
 app.use(messagesRoutes);
 app.use(userProfileRoutes);
 
-//handling image
+//Handling images
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 io.on("connection", (socket) => {
   console.log(socket.id);
   socket.on("message", (message) => {
     Message.create(message);
-
     io.sockets.emit("message", { message });
   });
 });
 
-//error middleware
+//Error middleware
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     message: err.message || "Internal Server Error",

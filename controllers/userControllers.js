@@ -19,6 +19,7 @@ exports.signup = async (req, res, next) => {
     next(error);
   }
 };
+
 exports.signin = async (req, res, next) => {
   const token = generateToken(req.user);
   res.json({ token });
@@ -34,6 +35,7 @@ const generateToken = (user) => {
   const token = jwt.sign(payload, JWT_SECRET);
   return token;
 };
+
 exports.usersList = async (req, res, next) => {
   try {
     const users = await User.findAll({

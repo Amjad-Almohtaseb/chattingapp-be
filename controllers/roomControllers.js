@@ -37,7 +37,7 @@ exports.roomsList = async (req, res, next) => {
         },
       ],
     });
-    console.log(rooms);
+
     const newRooms = rooms.map((room) => {
       return {
         adminId: req.user.id,

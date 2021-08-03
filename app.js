@@ -40,11 +40,22 @@ app.use(userProfileRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
-  socket.on("message", (message) => {
-    Message.create(message);
+  socket.on("message", async (message) => {
+    let newMessage = await Message.create(message);
+    console.log("BE0");
 
-    io.sockets.emit("message", { message });
+    io.sockets.emit("message", { message: newMessage });
+    console.log(socket.id);
+
+    socket.on("messageDelete", async ({ messageId }) => {
+      console.log("BE");
+      console.log(messageId);
+      const foundMessage = await Message.findByPk(messageId);
+      console.log(foundMessage);
+      await foundMessage.destroy(messageId);
+
+      io.sockets.emit("messageDelete", messageId);
+    });
   });
 });
 

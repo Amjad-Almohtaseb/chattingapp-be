@@ -46,16 +46,13 @@ io.on("connection", (socket) => {
 
     io.sockets.emit("message", { message: newMessage });
     console.log(socket.id);
+  });
+  socket.on("messageDelete", async ({ messageId }) => {
+    const foundMessage = await Message.findByPk(messageId);
 
-    socket.on("messageDelete", async ({ messageId }) => {
-      console.log("BE");
-      console.log(messageId);
-      const foundMessage = await Message.findByPk(messageId);
-      console.log(foundMessage);
-      await foundMessage.destroy(messageId);
-
-      io.sockets.emit("messageDelete", messageId);
-    });
+    await foundMessage.destroy();
+    console.log("be");
+    io.sockets.emit("messageDelete", messageId);
   });
 });
 

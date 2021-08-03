@@ -18,6 +18,7 @@ const usersRoutes = require("./routes/usersRoutes");
 const messagesRoutes = require("./routes/messagesRoutes");
 const userProfileRoutes = require("./routes/userProfileRoutes");
 const db = require("./db/models");
+// db.sequelize.sync({ force: true });
 
 //middleware
 app.use(cors());

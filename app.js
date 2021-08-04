@@ -54,6 +54,15 @@ io.on("connection", (socket) => {
     console.log("be");
     io.sockets.emit("messageDelete", messageId);
   });
+
+  socket.on("messageUpdate", async ({ message }) => {
+    const updateMessage = await Message.findByPk(message.id);
+
+    const finalMessage = await updateMessage.update(message);
+    console.log(finalMessage.dataValues);
+
+    io.sockets.emit("messageUpdate", finalMessage.dataValues);
+  });
 });
 
 //error middleware
